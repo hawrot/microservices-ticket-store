@@ -16,3 +16,18 @@ spec:
         - name: auth
           image: matthawrot/auth
 
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-srv
+spec:
+  selctor:
+    app: auth
+  ports:
+    - name: auth
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+
