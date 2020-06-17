@@ -1,5 +1,6 @@
 import express from 'express';
 import {json} from 'body-parser';
+import 'express-async-errors';
 
 import { currentUserRouter } from "./routes/current-user";
 import { signInRouter} from "./routes/signin";
@@ -17,8 +18,8 @@ app.use(signOutRouter);
 app.use(signUpRouter);
 
 //Throw error on wrong route
-app.get('*', async (req, res, next) => {
-    next( new NotFoundError());
+app.get('*', async (req, res) => {
+    throw new NotFoundError();
 })
 
 app.use(errorHandler);
