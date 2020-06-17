@@ -17,8 +17,8 @@ app.use(signOutRouter);
 app.use(signUpRouter);
 
 //Throw error on wrong route
-app.get('*', () => {
-    throw new NotFoundError()
+app.get('*', async (req, res, next) => {
+    next( new NotFoundError());
 })
 
 app.use(errorHandler);
