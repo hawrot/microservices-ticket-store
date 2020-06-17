@@ -5,12 +5,10 @@ deploy:
     manifests:
       - infra/k8s/*
 build:
-  #local:
-    #push: false
-  googleCloudBuild:
-    projectId: microservices-courses
+  local:
+    push: false
   artifacts:
-    - image: us.gcr.io/microservices-courses/auth
+    - image: matthawrot/auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -18,4 +16,3 @@ build:
         manual:
           - src: 'src/**/.ts'
             dest: .
-
