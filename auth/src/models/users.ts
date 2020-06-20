@@ -33,6 +33,10 @@ const userSchema = new mongoose.Schema({
         // This hides the password and __v values when object is parsed into json
         toJSON: {
             transform(doc, ret) {
+                //return an _id as id
+                ret.id = ret._id;
+                delete ret._id;
+
                 delete ret.password;
                 delete ret.__v;
 
