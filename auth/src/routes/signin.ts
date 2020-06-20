@@ -2,23 +2,35 @@ import express, {Request, Response} from 'express';
 import {body} from "express-validator";
 
 import {validateRequest} from "../middlewares/validate-request";
+import {User} from "../models/users";
+import {BadRequestErr} from "../errors/bad-request-err";
+import {Password} from "../services/password";
 
 const router = express.Router();
 
 router.post('/api/users/signin', [
-    body('email')
-        .isEmail()
-        .withMessage('Email must be valid'),
-    body('password')
-        .trim()
-        .notEmpty()
-        .withMessage('You must enter the password')
-],
+        body('email')
+            .isEmail()
+            .withMessage('Email must be valid'),
+        body('password')
+            .trim()
+            .notEmpty()
+            .withMessage('You must enter the password')
+    ],
     validateRequest,
-    (req: Request, res: Response) => {
+    async (req: Request, res: Response) => {
+        const {email, password} = req.body;
 
+        const existingUser = await User.findOne({email});
+        if (!existingUser) {
+            throw new BadRequestErr('Invalid credentials');
+        }
+        const passwordsMatch = await Password.compare(existingUser.password, password);
+        if (!passwordsMatch) {
+            throw new BadRequestErr('Invalid credentials');
+        }
 
-});
+    });
 
 
 export {router as signInRouter};
