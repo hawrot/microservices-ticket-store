@@ -9,4 +9,11 @@ it('should fail wen an email that does not exist is supplied', async function ()
             password: 'password'
         })
         .expect(400);
+
+    const response = await request(app)
+        .post('/api/users/signout')
+        .send({})
+        .expect(200);
+
+    console.log(response.get('Set-Cookie'));
 });
