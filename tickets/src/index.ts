@@ -6,7 +6,7 @@ const start = async () => {
         throw new Error('Error JWT must be defined');
     }
     try {
-        await mongoose.connect('mongodb://auth-mongo-srv:27017/', {
+        await mongoose.connect('', {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true
