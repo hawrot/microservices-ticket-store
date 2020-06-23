@@ -27,6 +27,15 @@ it('should  return a status other than 401 if  the user is signed in', async fun
 });
 
 it('should return an error if an invalid title is provided',async function () {
+    const response = await request(app)
+        .post('/api/tickets')
+        .set('Cookie', global.signin())
+        .send({
+            title: '',
+            price: 10
+        });
+
+    expect(response.status).toEqual(400);
 
 });
 
