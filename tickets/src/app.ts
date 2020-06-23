@@ -3,10 +3,8 @@ import {json} from 'body-parser';
 import 'express-async-errors';
 import mongoose from 'mongoose';
 import cookieSession from "cookie-session";
+import {errorHandler, NotFoundError, currentUser} from '@mhmicrotickets/common';
 
-
-import {errorHandler} from "@mhmicrotickets/common";
-import {NotFoundError} from "@mhmicrotickets/common";
 
 import {createTicketRouter} from "./routes/new";
 
@@ -17,6 +15,7 @@ app.use(cookieSession({
     signed: false,
     secure: process.env.NODE_ENV !== 'test'
 }));
+app.use(currentUser);
 
 app.use(createTicketRouter);
 
