@@ -7,6 +7,7 @@ import {errorHandler, NotFoundError, currentUser} from '@mhmicrotickets/common';
 
 import {showTicketRouter} from "./routes/show";
 import {createTicketRouter} from "./routes/new";
+import {indexTicketRouter} form './routers/index';
 
 const app = express();
 app.set('trust proxy', true);
@@ -19,6 +20,9 @@ app.use(currentUser);
 
 app.use(createTicketRouter);
 app.use(showTicketRouter);
+app.use(indexTicketRouter);
+
+
 
 //Throw error on wrong route
 app.get('*', async (req, res) => {
