@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import cookieSession from "cookie-session";
 import {errorHandler, NotFoundError, currentUser} from '@mhmicrotickets/common';
 
-
+import {showTicketRouter} from "./routes/show";
 import {createTicketRouter} from "./routes/new";
 
 const app = express();
@@ -18,6 +18,7 @@ app.use(cookieSession({
 app.use(currentUser);
 
 app.use(createTicketRouter);
+app.use(showTicketRouter);
 
 //Throw error on wrong route
 app.get('*', async (req, res) => {
