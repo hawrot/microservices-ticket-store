@@ -21,4 +21,6 @@ it('should fetch a list of tickets', async function () {
         .get('/api/tickets')
         .send()
         .expect(200);
+
+    expect(response.body.length).toEqual(3);
 });
