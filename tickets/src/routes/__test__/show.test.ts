@@ -1,13 +1,16 @@
 import request from 'supertest';
 import {app} from "../../app";
 import {Ticket} from "../../models/ticket";
+import mongoose from 'mongoose';
 
 
 it('should return 404 if the ticket is not found', async function () {
+    const id = new mongoose.Types.ObjectId().toHexString();
     await request(app)
-        .get('/api/tickets/lsdkaoskdksd')
+        .get(`/api/tickets/${id}`)
         .send()
         .expect(404);
+
 });
 
 it('should return ticket if the ticket is available', async function () {
