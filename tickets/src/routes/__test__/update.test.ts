@@ -25,7 +25,21 @@ it('should return a 401 if the user is not auth', async function () {
         .expect(401);
 });
 it('should return a 401 if the user does not own the ticket', async function () {
-
+   const response = await request(app)
+        .post('/api/tickets')
+        .set('Cookie', global.signin())
+        .send({
+            title: 'abcdef',
+            price: 20
+        })
+    await request(app)
+        .put(`/api/tickets/${response.body.id}`)
+        .set('Cookie', global.signin())
+        .send({
+            title: 'abcdef',
+            price: 20
+        })
+        .expect(401)
 });
 it('should return a 400 if the user provides an invalid title or price', async function () {
 
