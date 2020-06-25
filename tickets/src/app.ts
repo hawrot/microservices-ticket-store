@@ -7,7 +7,7 @@ import {errorHandler, NotFoundError, currentUser} from '@mhmicrotickets/common';
 
 import {showTicketRouter} from "./routes/show";
 import {createTicketRouter} from "./routes/new";
-import {indexTicketRouter} form './routers/index';
+import {indexTicketRouter} from "./routes/index";
 
 const app = express();
 app.set('trust proxy', true);
