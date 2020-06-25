@@ -6,10 +6,8 @@ const start = async () => {
         throw new Error('Error JWT must be defined');
     }
     if (!process.env.MONGO_URI){
-        throw new Error('Error MONGO URI must be defined');
+        throw new Error('Mongo URI must be defined')
     }
-
-
     try {
         await mongoose.connect(process.env.MONGO_URI, {
             useNewUrlParser: true,
