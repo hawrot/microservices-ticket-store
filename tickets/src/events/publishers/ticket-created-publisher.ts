@@ -1,9 +1,7 @@
-import {Publisher, TicketCreatedEvent} from '@mhmicrotickets/common';
-import {Subjects} from "../../../../common/src";
+import {Publisher, TicketCreatedEvent, Subjects} from '@mhmicrotickets/common';
 
-export class TicketCreatedPublisher extends Publisher<TicketCreatedEvent>{
-    readonly subject = Subjects.TicketCreated;
 
+export class TicketCreatedPublisher extends Publisher<TicketCreatedEvent> {
+    subject: Subjects.TicketCreated = Subjects.TicketCreated;
 }
-
 

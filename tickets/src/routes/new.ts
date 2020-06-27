@@ -7,27 +7,35 @@ import {TicketCreatedPublisher} from "../events/publishers/ticket-created-publis
 
 const router = express.Router();
 
-router.post('/api/tickets', requireAuth,[
-    body('title').not().isEmpty().withMessage('Title is required'),
-    body('price').isFloat({ gt: 0 }).withMessage('Price must be greater than 0')
+router.post(
+    '/api/tickets',
+    requireAuth,
+    [
+        body('title').not().isEmpty().withMessage('Title is required'),
+        body('price')
+            .isFloat({ gt: 0 })
+            .withMessage('Price must be greater than 0'),
+    ],
+    validateRequest,
+    async (req: Request, res: Response) => {
+        const { title, price } = req.body;
 
-], validateRequest, async (req: Request, res: Response) => {
-   const {title, price } = req.body;
+        const ticket = Ticket.build({
+            title,
+            price,
+            userId: req.currentUser!.id,
+        });
+        await ticket.save();
+        // @ts-ignore
+        await new TicketCreatedPublisher(client).publish({
+            id: ticket.id,
+            title: ticket.title.toString(),
+            price: ticket.price,
+            userId: ticket.userId,
+        });
 
-   const ticket = Ticket.build({
-       title, price, userId: req.currentUser!.id
-   });
-   await ticket.save();
-   new TicketCreatedPublisher(client).publish({
-       id: ticket.id,
-       title: ticket.title,
-       price: ticket.price,
-       userId: req.currentUser!.id
-
-   })
-
-    res.status(201).send(ticket);
-
-})
+        res.status(201).send(ticket);
+    }
+);
 
 export { router as createTicketRouter };
