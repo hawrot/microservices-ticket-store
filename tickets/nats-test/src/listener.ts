@@ -1,13 +1,15 @@
 import nats, {Message, Stan} from 'node-nats-streaming';
+import {TicketCreatedListener} from "./events/ticket-created-listener";
+import {randomBytes} from "crypto";
 
 console.clear();
 
-const stan = nats.connect('ticketing', '123', {
+const stan = nats.connect('ticketing', randomBytes(4).toString('hex'), {
     url: 'http://localhost:4222'
 });
 
 
-stan.on('connect', () => {
+ stan.on('connect', () => {
     console.log('Listener connected to NATS');
 
     stan.on('close', () => {

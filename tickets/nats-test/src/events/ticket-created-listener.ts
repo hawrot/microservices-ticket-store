@@ -1,7 +1,7 @@
 import {Message} from "node-nats-streaming";
 import {Listener} from "./base-listener";
 
-class TicketCreatedListener extends Listener{
+export class TicketCreatedListener extends Listener{
     subject = 'ticket:created';
     queueGroupName = 'payments-service';
 
