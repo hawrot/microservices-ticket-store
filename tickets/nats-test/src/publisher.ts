@@ -12,11 +12,16 @@ stan.on('connect', async () => {
    console.log('Publisher connected to NATS');
 
    const publisher = new TicketCreatedPublisher(stan);
-   await publisher.publish({
-       id: '123',
-       title: 'concert',
-       price: 20
-   })
+   try {
+       await publisher.publish({
+           id: '123',
+           title: 'concert',
+           price: 20
+       })
+   }catch (e) {
+       console.log(e);
+   }
+
 
  /*  const data = JSON.stringify({
      id: '123',
