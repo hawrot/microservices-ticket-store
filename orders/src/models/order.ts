@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 // @ts-ignore
 import {OrderStatus} from "@mhmicrotickets/common";
+import {TicketDoc} from "./ticket";
 
 interface OrderAttrs {
     userId: string;
