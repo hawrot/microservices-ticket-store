@@ -4,11 +4,10 @@ import 'express-async-errors';
 import mongoose from 'mongoose';
 import cookieSession from "cookie-session";
 import {errorHandler, NotFoundError, currentUser} from '@mhmicrotickets/common';
-
-import {showTicketRouter} from "./routes/show";
-import {createTicketRouter} from "./routes/new";
-import {indexTicketRouter} from "./routes/index";
-import {updateTicketRouter} from "./routes/update";
+import {indexOrderRouter} from "../routes";
+import {deleteOrderRouter} from "../routes/delete";
+import {newOrderRouter} from "../routes/new";
+import {showOrderRouter} from "../routes/show";
 
 const app = express();
 app.set('trust proxy', true);
@@ -19,10 +18,10 @@ app.use(cookieSession({
 }));
 app.use(currentUser);
 
-app.use(createTicketRouter);
-app.use(showTicketRouter);
-app.use(indexTicketRouter);
-app.use(updateTicketRouter);
+app.use(indexOrderRouter);
+app.use(deleteOrderRouter);
+app.use(showOrderRouter);
+app.use(newOrderRouter);
 
 
 
