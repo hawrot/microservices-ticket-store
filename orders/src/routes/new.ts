@@ -2,8 +2,11 @@ import express, {Request, Response} from 'express';
 import {BadRequestErr, NotFoundError, OrderStatus, requireAuth, validateRequest} from "@mhmicrotickets/common";
 import {body} from "express-validator";
 import mongoose from 'mongoose';
-import {Ticket} from "../src/models/ticket";
-import {Order} from "../src/models/order";
+import {Ticket} from "../models/ticket";
+import {Order} from "../models/order";
+
+import {OrderCreatedPublisher} from "../events/publishers/order-created-publisher";
+import {natsWrapper} from "../nats-wrapper";
 
 
 const router = express.Router();
@@ -40,6 +43,18 @@ router.post('/api/orders', requireAuth, [
         ticket: ticket
     });
     await order.save();
+
+
+    new OrderCreatedPublisher(natsWrapper.client).publish({
+        id: order.id,
+        status: order.status,
+        userId: order.userId,
+        expiresAt: order.expiresAt.toISOString(),
+        ticket: {
+            id: ticket.id,
+            price: ticket.price
+        }
+    })
 
     res.status(201).send(order);
 

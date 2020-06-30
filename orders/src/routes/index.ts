@@ -1,6 +1,6 @@
 import express, {Request, Response} from 'express';
 import {requireAuth} from "@mhmicrotickets/common";
-import { Order } from "../src/models/order";
+import { Order } from "../models/order";
 
 const router = express.Router();
 
