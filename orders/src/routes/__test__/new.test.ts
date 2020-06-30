@@ -1,8 +1,8 @@
 import request from 'supertest';
-import {app} from "../../src/app";
+import {app} from "../../app";
 import mongoose from 'mongoose';
-import {Order} from "../../src/models/order";
-import {Ticket} from "../../src/models/ticket";
+import {Order} from "../../models/order";
+import {Ticket} from "../../models/ticket";
 import {OrderStatus} from "@mhmicrotickets/common";
 
 it('should return an error if the ticket does not exist',  async function () {

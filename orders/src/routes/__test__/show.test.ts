@@ -1,8 +1,8 @@
 // @ts-ignore
 import request from 'supertest';
-import {app} from "../../src/app";
-import {Order} from "../../src/models/order";
-import {Ticket} from "../../src/models/ticket";
+import {app} from "../../app";
+import {Order} from "../../models/order";
+import {Ticket} from "../../models/ticket";
 import {OrderStatus} from "@mhmicrotickets/common";
 
 it('should  fetch the order', async function () {

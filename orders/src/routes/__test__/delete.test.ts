@@ -1,7 +1,7 @@
 import request from 'supertest';
-import {app} from "../../src/app";
-import {Ticket} from "../../src/models/ticket";
-import {Order} from "../../src/models/order";
+import {app} from "../../app";
+import {Ticket} from "../../models/ticket";
+import {Order} from "../../models/order";
 import {OrderStatus} from "@mhmicrotickets/common";
 
 it('marks an order as cancelled', async () => {

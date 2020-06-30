@@ -1,8 +1,8 @@
 import request from 'supertest';
-import {app} from "../../src/app";
+import {app} from "../../app";
 import mongoose from 'mongoose';
-import {Ticket} from "../../src/models/ticket";
-import {Order} from "../../src/models/order";
+import {Ticket} from "../../models/ticket";
+import {Order} from "../../models/order";
 import {OrderStatus} from "@mhmicrotickets/common";
 import {body} from "express-validator";
 
