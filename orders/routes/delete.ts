@@ -4,7 +4,7 @@ import {requireAuth, OrderStatus, NotFoundError, NotAuthorizedError} from "@mhmi
 
 const router = express.Router();
 
-router.delete('/api/orders/:orderId', async (req: Request, res: Response) => {
+router.delete('/api/orders/:orderId', requireAuth, async (req: Request, res: Response) => {
   const { orderId } = req.params;
 
   const order = await Order.findById(orderId);
@@ -19,7 +19,7 @@ router.delete('/api/orders/:orderId', async (req: Request, res: Response) => {
   order.status = OrderStatus.Cancelled;
   await order.save();
 
-    res.send(order);
+  res.status(204).send(order);
 });
 
 export {router as deleteOrderRouter};
