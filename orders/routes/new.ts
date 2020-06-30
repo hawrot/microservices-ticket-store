@@ -20,12 +20,7 @@ router.post('/api/orders', requireAuth, [
     }
 
     //Make sure that a ticket is not already reserved
-    const existingOrder = await Order.findOne({
-        ticket:ticket,
-        status: {
-            $in: [OrderStatus.Created, OrderStatus.AwaitingPayment, OrderStatus.Complete]
-        }
-    });
+
     if (existingOrder){
         throw new BadRequestErr('Ticket is already reserved');
     }
