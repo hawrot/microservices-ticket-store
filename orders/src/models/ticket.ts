@@ -52,6 +52,8 @@ ticketSchema.methods.isReserved = async function () {
             $in: [OrderStatus.Created, OrderStatus.AwaitingPayment, OrderStatus.Complete]
         }
     });
+
+    return !!existingOrder;
 }
 
 const Ticket = mongoose.model<TicketDoc, TicketModel>('Ticket', ticketSchema);

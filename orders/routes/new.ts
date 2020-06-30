@@ -8,6 +8,8 @@ import {Order} from "../src/models/order";
 
 const router = express.Router();
 
+const EXPIRATION_WINDOW_SECONDS = 15 * 60; //15 minutes;
+
 router.post('/api/orders', requireAuth, [
     body('ticketId').not().isEmpty().custom((input: string) => mongoose.Types.ObjectId.isValid(input)).withMessage('Ticket id must be provided')
 ], validateRequest, async (req: Request, res: Response) => {
@@ -20,17 +22,26 @@ router.post('/api/orders', requireAuth, [
     }
 
     //Make sure that a ticket is not already reserved
-
-    if (existingOrder){
+    const isReserved = await ticket.isReserved();
+    if (isReserved){
         throw new BadRequestErr('Ticket is already reserved');
     }
 
-
     //Calculate an expiration date for an order
-
+    const expiration = new Date();
+    expiration.setSeconds(expiration.getSeconds() + EXPIRATION_WINDOW_SECONDS);
 
     //Build the order and save into DB
 
+    const order = Order.build({
+        userId: req.currentUser!.id,
+        status: OrderStatus.Created,
+        expiresAt: expiration,
+        ticket: ticket
+    });
+    await order.save();
+
+    res.status(201).send(order);
 
 });
 
