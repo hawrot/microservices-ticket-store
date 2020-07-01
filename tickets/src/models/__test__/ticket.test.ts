@@ -22,8 +22,13 @@ it('should  implement optimistic concurrency control', async function () {
     //save the fist fetched ticket
     await firstInstance!.save();
 
-    //save the second fetched ticket
-    await secondInstance!.save();
-
     //save the second fetched ticket and expect an error
+    try {
+        await secondInstance!.save();
+    } catch (e) {
+        return;
+    }
+    throw new Error('Should not reach this point');
+
+
 });
