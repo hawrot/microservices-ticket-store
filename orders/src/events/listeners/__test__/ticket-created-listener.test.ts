@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, {set} from 'mongoose';
 import {TicketCreatedEvent} from "@mhmicrotickets/common";
 import {TicketCreatedListener} from "../ticket-created-listener";
 import {Message} from 'node-nats-streaming';
@@ -43,11 +43,13 @@ it('should create and save a ticket', async function () {
 });
 
 it('should ack the message', async function () {
+    const {data, listener, msg } = await setup();
 
     //call the onMessage function with the data object + message object
+    await listener.onMessage(data, msg);
 
     //write assertions to make sure acks were called
-
+    expect(msg.ack()).toHaveBeenCalled();
 
 });
 
