@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import {Order} from "./order";
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
+import { Order } from './order';
 import {OrderStatus} from "@mhmicrotickets/common";
-import {updateIfCurrentPlugin} from "mongoose-update-if-current";
 
 interface TicketAttrs {
     id: string;
@@ -49,22 +49,24 @@ ticketSchema.statics.build = (attrs: TicketAttrs) => {
     return new Ticket({
         _id: attrs.id,
         title: attrs.title,
-        price: attrs.price
+        price: attrs.price,
     });
 };
-
 ticketSchema.methods.isReserved = async function () {
-    // this === the ticket document that we just calleed 'isReserved'
-
+    // this === the ticket document that we just called 'isReserved' on
     const existingOrder = await Order.findOne({
-        ticket:this,
+        ticket: this,
         status: {
-            $in: [OrderStatus.Created, OrderStatus.AwaitingPayment, OrderStatus.Complete]
-        }
+            $in: [
+                OrderStatus.Created,
+                OrderStatus.AwaitingPayment,
+                OrderStatus.Complete,
+            ],
+        },
     });
 
     return !!existingOrder;
-}
+};
 
 const Ticket = mongoose.model<TicketDoc, TicketModel>('Ticket', ticketSchema);
 

@@ -1,7 +1,7 @@
-import {Publisher, TicketUpdatedEvents, Subjects} from '@mhmicrotickets/common';
+import {Publisher, TicketUpdatedEvent, Subjects} from '@mhmicrotickets/common';
 
 
-export class TicketUpdatedPublisher extends Publisher<TicketUpdatedEvents> {
+export class TicketUpdatedPublisher extends Publisher<TicketUpdatedEvent> {
     subject: Subjects.TicketUpdated = Subjects.TicketUpdated;
 }
 
