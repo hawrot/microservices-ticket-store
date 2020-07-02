@@ -1,7 +1,7 @@
 import express, {Request, Response} from "express";
 import {body} from 'express-validator';
 import {Ticket} from "../models/ticket";
-import {validateRequest, NotFoundError, requireAuth, NotAuthorizedError} from '@mhmicrotickets/common';
+import {validateRequest, NotFoundError, requireAuth, NotAuthorizedError, BadRequestErr} from '@mhmicrotickets/common';
 import {TicketUpdatedPublisher} from "../events/publishers/ticket-updated-publisher";
 import {natsWrapper} from "../nats-wrapper";
 
@@ -21,6 +21,10 @@ router.put('/api/tickets/:id', requireAuth, [
 
         if (!ticket) {
             throw new NotFoundError();
+        }
+
+        if (ticket.orderId){
+            throw new BadRequestErr('Ticket is already reserved');
         }
 
         if (ticket.userId !== req.currentUser!.id) {
