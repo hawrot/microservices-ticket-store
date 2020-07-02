@@ -46,5 +46,10 @@ it('should find updates and save save a ticket', async function () {
 });
 
 it('should ack the message', async function () {
+    const {msg, data, ticket, listener} = await setup();
+
+    await listener.onMessage(data, msg);
+
+    expect(msg.ack()).toHaveBeenCalled();
 
 });
