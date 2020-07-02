@@ -2,7 +2,7 @@ import {OrderCreatedListener} from "../order-created-listener";
 import {natsWrapper} from "../../../nats-wrapper";
 import {Ticket} from "../../../models/ticket";
 import {OrderCreatedEvent} from "@mhmicrotickets/common";
-import mongoose from 'mongoose';
+import mongoose, {set} from 'mongoose';
 import {OrderStatus} from "@mhmicrotickets/common";
 import {Message} from 'node-nats-streaming';
 
@@ -37,3 +37,16 @@ const setup = async () => {
     return {listener, ticket, data, msg};
 }
 
+it('should set the userId of the ticket', async function () {
+    const { listener, ticket, data, msg } = await setup();
+
+    await listener.onMessage(data, msg);
+
+    const updatedTicket = await Ticket.findById(ticket.id);
+
+    expect(updatedTicket!.orderId).toEqual(data.id);
+});
+
+it('should call the message', function () {
+
+});

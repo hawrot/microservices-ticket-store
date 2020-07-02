@@ -12,7 +12,7 @@ interface TicketDoc extends mongoose.Document {
     price: number;
     userId: string;
     version: number;
-    userId?: string;
+    orderId?: string;
 }
 
 interface TicketModel extends mongoose.Model<TicketDoc> {
