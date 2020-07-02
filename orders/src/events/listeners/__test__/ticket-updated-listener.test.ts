@@ -64,6 +64,6 @@ it('should not call ack if the event has a skipped version', async function () {
 
     }
 
-    expect(msg.ac).not.toHaveBeenCalled();
+    expect(msg.ack).not.toHaveBeenCalled();
 
 });
