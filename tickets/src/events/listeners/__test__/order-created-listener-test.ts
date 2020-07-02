@@ -47,6 +47,11 @@ it('should set the userId of the ticket', async function () {
     expect(updatedTicket!.orderId).toEqual(data.id);
 });
 
-it('should call the message', function () {
+it('should call the message', async function () {
+    const { listener, ticket, data, msg } = await setup();
+
+    await listener.onMessage(data, msg);
+
+    expect(msg.ack).toHaveBeenCalled();
 
 });
