@@ -26,7 +26,7 @@ const setup = async () => {
 
     // @ts-ignore
     const msg: Message = {
-        ack: jest.fn();
+        ack: jest.fn()
     }
 
     return {msg, data, ticket, listener};
@@ -50,6 +50,20 @@ it('should ack the message', async function () {
 
     await listener.onMessage(data, msg);
 
-    expect(msg.ack()).toHaveBeenCalled();
+    expect(msg.ack).toHaveBeenCalled();
+
+});
+
+it('should not call ack if the event has a skipped version', async function () {
+    const {msg, data, ticket, listener} = await setup();
+
+    data.version = 10;
+    try {
+        await listener.onMessage(data, msg);
+    }catch (e) {
+
+    }
+
+    expect(msg.ac).not.toHaveBeenCalled();
 
 });
