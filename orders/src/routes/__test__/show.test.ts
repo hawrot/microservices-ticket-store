@@ -4,9 +4,11 @@ import {app} from "../../app";
 import {Order} from "../../models/order";
 import {Ticket} from "../../models/ticket";
 import {OrderStatus} from "@mhmicrotickets/common";
+import mongoose from "mongoose";
 
 it('should  fetch the order', async function () {
     const ticket = Ticket.build({
+        id: mongoose.Types.ObjectId().toHexString(),
         title: 'concert',
         price: 20
     });
