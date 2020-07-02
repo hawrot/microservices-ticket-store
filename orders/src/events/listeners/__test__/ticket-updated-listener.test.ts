@@ -1,7 +1,7 @@
 import {TicketUpdatedListener} from "../ticket-updated-listener";
 import {natsWrapper} from "../../../nats-wrapper";
 import {Ticket} from "../../../models/ticket";
-import mongoose from 'mongoose';
+import mongoose, {set} from 'mongoose';
 import {TicketUpdatedEvent} from "@mhmicrotickets/common";
 import Message from 'node-nats-streaming';
 
@@ -33,8 +33,16 @@ const setup = async () => {
 
 };
 
-it('should find upates and save save a ticket', async function () {
-    
+it('should find updates and save save a ticket', async function () {
+    const {msg, data, ticket, listener} = await setup();
+
+    await listener.onMessage(data, msg);
+
+    const updatedTicket = await Ticket.findById(ticket.id);
+
+    expect(updatedTicket!.title).toEqual(data.title);
+    expect(updatedTicket!.price).toEqual(data.price);
+    expect(updatedTicket!.version).toEqual(data.version);
 });
 
 it('should ack the message', async function () {
