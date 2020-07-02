@@ -124,8 +124,7 @@ it('should reject edits if the ticket is reserved', async function () {
         });
 
     const ticket = await Ticket.findById(response.body.id);
-    ticket!.set({orderId: mongoose.Types.ObjectId().toHexString()});
-
+    ticket!.set({ orderId: mongoose.Types.ObjectId().toHexString() });
     await ticket!.save();
 
     await request(app)
