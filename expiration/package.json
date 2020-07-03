@@ -19,7 +19,9 @@
   "license": "ISC",
   "dependencies": {
     "@mhmicrotickets/common": "^1.0.14",
-    'node-nats-streaming' : "^0.3.2",
+    "@types/bull": "^3.14.0",
+    "bull": "^3.15.0",
+    "node-nats-streaming": "^0.3.2",
     "ts-node-dev": "^1.0.0-pre.49",
     "typescript": "^3.9.5"
   },
