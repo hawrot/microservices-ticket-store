@@ -10,11 +10,13 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
 
     // @ts-ignore
     async onMessage(data: OrderCreatedListener["data"], msg: Message) {
+        const delay = new Date(data.expiresAt).getTime() - new Date().getTime();
+        console.log('Waiting this time to preccess the job: ', delay)
         await expirationQueue.add({
                 orderId: data.id
             },
             {
-                delay: 10000,
+                delay: delay,
             }
         );
 
