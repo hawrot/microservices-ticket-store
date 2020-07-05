@@ -1,3 +1,4 @@
+import {stripe} from "../stripe";
 import express, {raw, Request, Response} from 'express';
 import {body} from "express-validator";
 import {
@@ -31,6 +32,12 @@ router.post('/api/payments', requireAuth, [
     if (order.status === OrderStatus.Cancelled) {
         throw new BadRequestErr('Cannot pay for this order');
     }
+
+    await stripe.charges.create({
+        currency: 'gbp',
+        amount: order.price * 100,
+        source: token
+    })
 
     res.send({success: true});
 })
