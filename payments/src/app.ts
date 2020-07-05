@@ -4,6 +4,7 @@ import 'express-async-errors';
 import mongoose from 'mongoose';
 import cookieSession from "cookie-session";
 import {errorHandler, NotFoundError, currentUser} from '@mhmicrotickets/common';
+import {createChargeRouter} from "./routes/new";
 
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(cookieSession({
     secure: process.env.NODE_ENV !== 'test'
 }));
 app.use(currentUser);
+app.use(createChargeRouter);
 
 
 //Throw error on wrong route
