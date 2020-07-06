@@ -4,8 +4,7 @@ import {OrderStatus} from '@mhmicrotickets/common';
 import {app} from '../../app';
 import {Order} from '../../models/order';
 import {stripe} from "../../stripe";
-
-
+import {Payment} from "../../models/payments";
 
 it('returns a 404 when purchasing an order that does not exist', async () => {
     await request(app)
@@ -89,6 +88,14 @@ it('should return 201 with valid input',async function () {
 
     expect(stripeCharge).toBeDefined();
     expect(stripeCharge!.currency).toEqual('gbp');
+
+    const payment = await Payment.findOne({
+        orderId: order.id,
+        stripeId: stripeCharge!.id,
+    });
+    expect(payment).not.toBeNull();
+
+
     /*const chargesOptions = (stripe.charges.create as jest.Mock).mock.calls[0][1];
 
     expect(chargesOptions.amount).toEqual(20 * 100);
