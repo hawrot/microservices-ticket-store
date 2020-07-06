@@ -11,6 +11,8 @@ import {
 } from "@mhmicrotickets/common";
 import {Order} from "../models/order";
 import {Payment} from "../models/payments";
+import {PaymentCreatedPublisher} from "../events/publisher/payment-created-publisher";
+import {natsWrapper} from "../nats-wrapper";
 
 const router = express.Router();
 
@@ -42,6 +44,12 @@ router.post('/api/payments', requireAuth, [
         stripeId: charge.id,
     });
     await payment.save();
+
+   await new PaymentCreatedPublisher(natsWrapper.client).publish({
+       id: payment.id,
+       orderId: payment.orderId,
+       stripeId: payment.stripeId
+    });
 
     res.status(201).send({ success: true });
 })
