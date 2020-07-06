@@ -3,6 +3,7 @@ import {queueGroupName} from "./queue-group-name";
 import {Message} from 'node-nats-streaming';
 import {Order} from "../../models/order";
 
+
 export class PaymentCreatedListener extends Listener<PaymentCreatedEvent> {
     // @ts-ignore
     readonly subject = Subjects.PaymentCreated;
