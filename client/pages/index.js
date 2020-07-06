@@ -5,7 +5,7 @@ const LandingPage = ({currentUser}) => {
 
 };
 
-LandingPage.getInitialProps = async (context) => {
+LandingPage.getInitialProps = async (context, client, currentUser) => {
    return{};
 }
 
