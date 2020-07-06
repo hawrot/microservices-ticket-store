@@ -88,7 +88,7 @@ it('should return 201 with valid input',async function () {
     });
 
     expect(stripeCharge).toBeDefined();
-    expect(stripeCharge!.currency).toEqual('gpb');
+    expect(stripeCharge!.currency).toEqual('gbp');
     /*const chargesOptions = (stripe.charges.create as jest.Mock).mock.calls[0][1];
 
     expect(chargesOptions.amount).toEqual(20 * 100);
