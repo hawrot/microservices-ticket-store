@@ -5,6 +5,8 @@ export default ({currentUser}) => {
     const links = [
         !currentUser && {label: 'Sign up', href: '/auth/signup'},
         !currentUser && {label: 'Sign in', href: '/auth/signin'},
+        currentUser && {label: 'Sell Tickets', href: '/tickets/new'},
+        currentUser && {label: 'Orders', href: '/orders'},
         currentUser && {label: 'Sign out', href: '/auth/signout'},
     ].filter(linkConfig => linkConfig)
         .map(({label, href}) => {
@@ -17,7 +19,7 @@ export default ({currentUser}) => {
 
   return <nav className="navbar navbar-light bg-light">
       <Link href="/">
-          <a className="navbar-light">GitTix</a>
+          <a className="navbar-light">BestTickets</a>
       </Link>
 
       <div className="d-flex justify-content-end">
